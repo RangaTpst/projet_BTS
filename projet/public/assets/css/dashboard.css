@@ -1,0 +1,125 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* Style général pour le body */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0px;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: #333;
+}
+
+/* Conteneur principal du dashboard */
+.container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.5s ease-in-out;
+    z-index: 1; /* Assurer que le conteneur soit au-dessus de tout autre contenu */
+}
+
+/* Animation d'apparition */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Titre principal */
+h2 {
+    color: #444;
+    margin-bottom: 20px;
+    font-size: 28px;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+/* Informations utilisateur */
+.user-details {
+    margin-bottom: 20px;
+    text-align: left;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+
+.user-details p {
+    margin: 10px 0;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+/* Boutons d'action */
+.dashboard-actions {
+    margin-top: 20px;
+}
+
+.dashboard-actions .btn {
+    display: inline-block;
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    background-color: #008CBA;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 8px;
+    font-size: 18px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 140, 186, 0.3);
+}
+
+.dashboard-actions .btn:hover {
+    background-color: #007bb5;
+    transform: translateY(-3px);
+}
+
+.dashboard-actions .btn:active {
+    transform: translateY(1px);
+}
+
+/* Bouton de déconnexion */
+.dashboard-actions .logout-btn {
+    background-color: #f44336;
+}
+
+.dashboard-actions .logout-btn:hover {
+    background-color: #e53935;
+}
+
+/* Style du footer */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+    margin-top: auto;
+    position: relative;
+    z-index: 0;
+}
+
+/* Style pour les messages d'erreur */
+p.error {
+    color: red;
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 15px;
+}

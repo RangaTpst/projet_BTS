@@ -1,0 +1,75 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* Conteneur principal de la page "À propos" */
+.about-container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+/* Conteneur général pour chaque section */
+.about-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    min-height: 400px;
+    box-sizing: border-box;
+    background-color: #8f8f8f8f;
+    margin-bottom: 40px;
+}
+
+/* Contenu du texte */
+.content-left, .content-right {
+    width: 50%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Images */
+.content-right img, .content-left img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Effet de fondu pour les images */
+.fade-left img {
+    mask-image: linear-gradient(to right, transparent, rgb(255, 255, 255)); /* Fondu de gauche à droite */
+}
+
+.fade-right img {
+    mask-image: linear-gradient(to left, transparent, black); /* Fondu de droite à gauche */
+}
+
+/* Style des textes */
+.content-left h2, .content-right h2 {
+    font-size: 32px;
+    color: #299141;
+    margin-bottom: 20px;
+}
+
+.content-left p, .content-right p {
+    font-size: 18px;
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Ajustement pour mobile */
+@media (max-width: 768px) {
+    .about-section {
+        flex-direction: column; /* Passe en colonne sur les petits écrans */
+        padding: 20px 0;
+    }
+
+    .content-left, .content-right {
+        width: 100%;
+        padding: 10px;
+    }
+}

@@ -1,0 +1,133 @@
+/* Styles par défaut pour le header */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 15px;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+nav {
+    position: relative;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 18px;
+    padding: 10px;
+}
+
+/* Menu déroulant */
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav ul li {
+    position: relative;
+}
+
+nav ul li ul {
+    display: none;
+    position: absolute;
+    top: 40px;
+    left: 0;
+    background-color: #444;
+    padding: 0;
+}
+
+nav ul li ul li {
+    width: 150px;
+}
+
+nav ul li ul li a {
+    padding: 10px;
+    display: block;
+    white-space: nowrap;
+}
+
+/* Afficher le sous-menu au survol */
+nav ul li:hover ul {
+    display: block;
+}
+
+.menu-left a {
+    margin-left: 0;
+    margin-right: 20px;
+}
+
+/* Styles pour le menu hamburger sur les petits écrans */
+.hamburger {
+    display: none;
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 20px;
+}
+
+.hamburger div {
+    background-color: white;
+    height: 4px;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    nav ul {
+        flex-direction: column;
+        display: none;
+    }
+
+    nav ul li {
+        margin-bottom: 10px;
+    }
+
+    /* Activer le menu déroulant sur mobile */
+    nav.active ul {
+        display: flex;
+    }
+
+    .menu-left, .menu-right {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .menu-left a, .menu-right a {
+        margin: 10px 0;
+        font-size: 16px;
+    }
+
+    .menu-left a:first-child, .menu-right a:first-child {
+        margin-top: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 18px;
+    }
+
+    .menu-left a, .menu-right a {
+        font-size: 14px;
+    }
+}

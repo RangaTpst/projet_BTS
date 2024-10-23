@@ -1,0 +1,130 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* Style général pour le body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Conteneur pour la page après le header (login et signup) */
+.login-container,
+.signup-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+    box-sizing: border-box;
+    margin-top: 50px; /* Ajout d'un espace sous le header */
+}
+
+/* Titres */
+h2 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 24px;
+}
+
+/* Style pour les labels */
+label {
+    font-size: 16px;
+    color: #333;
+    display: block;
+    margin-bottom: 8px;
+    text-align: left;
+}
+
+/* Style pour les champs de texte et mot de passe */
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+/* Effet lors du focus sur les champs de texte */
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus {
+    border-color: #008CBA;
+    outline: none;
+}
+
+/* Style pour le bouton "Se connecter" ou "S'inscrire" */
+button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #008CBA;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Effet hover pour le bouton */
+button[type="submit"]:hover {
+    background-color: #007bb5;
+}
+
+/* Case à cocher */
+input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+/* Conteneur de la case à cocher */
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+/* Lien pour s'inscrire ou se connecter */
+p {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+p a {
+    color: #008CBA;
+    text-decoration: none;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+
+/* Style pour les messages d'erreur */
+p.error {
+    color: red;
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+/* Style pour les messages de succès */
+p.success {
+    color: green;
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 15px;
+}

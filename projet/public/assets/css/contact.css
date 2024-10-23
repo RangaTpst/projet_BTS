@@ -1,0 +1,109 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* Style général pour le conteneur */
+.contact-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Section "Nous contacter" et "Envoyez-nous un message" */
+.contact-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+}
+
+/* Informations de contact et formulaire */
+.contact-info, .contact-form {
+    width: 48%; /* Assure que les deux colonnes prennent 48% de la largeur */
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.contact-info h2, .contact-form h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #299141;
+}
+
+/* Style pour les informations de contact */
+.contact-info p {
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+/* Style pour le formulaire de contact */
+.contact-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-form label {
+    margin-bottom: 5px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.contact-form input,
+.contact-form textarea {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.contact-form button {
+    padding: 12px;
+    background-color: #299141;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.contact-form button:hover {
+    background-color: #257737;
+}
+
+/* Section Google Maps */
+.map {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.map h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #299141;
+}
+
+.map iframe {
+    width: 100%;
+    height: 450px;
+    border: 0;
+    border-radius: 10px;
+}
+
+/* Responsiveness pour mobile */
+@media (max-width: 768px) {
+    .contact-section {
+        flex-direction: column;
+    }
+
+    .contact-info, .contact-form {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .map iframe {
+        height: 350px;
+    }
+}
