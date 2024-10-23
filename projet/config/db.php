@@ -1,6 +1,6 @@
 <?php
 $host = 'localhost';
-$db   = 'ecommerce'; // Remplace par le nom de ta base de données
+$db   = 'ecommerce';
 $user = 'root'; // Nom d'utilisateur de MySQL
 $pass = ''; // Mot de passe de MySQL, souvent vide en local
 $charset = 'utf8mb4';
