@@ -52,7 +52,7 @@ SR Nails est une plateforme qui permet aux utilisateurs de consulter les produit
 ## Arborescence du projet
 
 Voici la structure du projet complète :
-\\\
+```
 projet/
 ├── README.md
 ├── admin/
@@ -97,7 +97,7 @@ projet/
 │   ├── public/
 │   │   └── image/               # Images spécifiques accessibles publiquement
 │   └── uploads/                 # Fichiers téléchargés (produits, images d'utilisateurs, etc.)
-\\\
+```
 
 ## Fonctionnalités principales
 
