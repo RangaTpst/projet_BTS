@@ -1,0 +1,11 @@
+ErrorDocument 404 /projet/public/404.php
+
+Options -Indexes
+
+<FilesMatch "(^/public)">
+    Order deny,allow
+    Deny from all
+</FilesMatch>
+
+
+    

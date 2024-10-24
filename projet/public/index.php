@@ -1,8 +1,33 @@
 <?php
+/**
+ * Fichier index.php
+ * 
+ * Point d'entrée principal de l'application.
+ * Ce fichier gère l'affichage de la page d'accueil, l'affichage des produits récents,
+ * ainsi que le carrousel de présentation des sections principales du site.
+ * Il inclut les dépendances nécessaires, initialise la session utilisateur, 
+ * et récupère les produits disponibles dans la base de données.
+ * 
+ * PHP version 7.4+
+ * 
+ * @category   E-commerce
+ * @package    SR NAILS
+ * @author     Nicolas <nicolas.rouillelanoe@gmail.com>
+ * @license    http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @version    1.0
+ * @link       https://github.com/RangaTpst/projet_BTS
+ */
 
-require_once '../core/product-functions.php';
+require_once '../core/product-functions.php'; // Inclusion des fonctions liées aux produits
 
-// Récupérer les 3 derniers produits
+/**
+ * Récupération des produits récents.
+ * 
+ * Cette requête récupère les 4 derniers produits ajoutés à la base de données,
+ * pour les afficher sur la page d'accueil sous forme de grille.
+ * 
+ * @return array Tableau associatif contenant les informations des produits récents.
+ */
 $query = "SELECT * FROM products ORDER BY created_at DESC LIMIT 4";
 $stmt = $pdo->prepare($query);
 $stmt->execute();
@@ -15,11 +40,11 @@ $recentProducts = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accueil - SR Nails</title>
-    <link rel="stylesheet" href="../public/assets/css/styles.css">
+    <link rel="stylesheet" href="../public/assets/css/styles.css"> <!-- Lien vers le fichier CSS -->
 </head>
 <body>
 
-    <?php include '../includes/header.php'; ?>
+    <?php include '../includes/header.php'; ?> <!-- Inclusion du header -->
 
     <!-- Section Hero -->
     <section class="hero">
@@ -27,7 +52,7 @@ $recentProducts = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <p>"Des ongles sublimes, posés en un clin d'œil."</p>
     </section>
 
-    <!-- Carrousel -->
+    <!-- Carrousel de sections principales -->
     <div class="carousel-container">
         <div class="carousel-slide active">
             <img src="../public/assets/image/about-slide.jpg" alt="À propos de SR Nails">
@@ -54,7 +79,7 @@ $recentProducts = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
 
-        <!-- Boutons de contrôle -->
+        <!-- Boutons de contrôle du carrousel -->
         <button class="prev-btn" onclick="plusSlides(-1)">&#10094;</button>
         <button class="next-btn" onclick="plusSlides(1)">&#10095;</button>
     </div>
@@ -77,14 +102,21 @@ $recentProducts = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </section>
 
-    <?php include '../includes/footer.php'; ?>
+    <?php include '../includes/footer.php'; ?> <!-- Inclusion du footer -->
 
     <script>
     let slideIndex = 0;
     const slides = document.querySelectorAll('.carousel-slide');
     showSlides(slideIndex);
 
-    // Fonction pour afficher les slides
+    /**
+     * Fonction pour afficher les slides du carrousel.
+     * 
+     * Cette fonction affiche le slide correspondant à l'index fourni
+     * et masque les autres slides.
+     * 
+     * @param int index Index du slide à afficher.
+     */
     function showSlides(index) {
         slides.forEach((slide, i) => {
             slide.classList.remove('active');
@@ -94,7 +126,11 @@ $recentProducts = $stmt->fetchAll(PDO::FETCH_ASSOC);
         slides[index].style.opacity = '1'; // Afficher la slide active
     }
 
-    // Fonction pour changer de slide manuellement
+    /**
+     * Fonction pour changer de slide manuellement.
+     * 
+     * @param int n Nombre de slides à avancer ou reculer.
+     */
     function plusSlides(n) {
         slideIndex += n;
         if (slideIndex >= slides.length) {
@@ -106,7 +142,11 @@ $recentProducts = $stmt->fetchAll(PDO::FETCH_ASSOC);
         showSlides(slideIndex);
     }
 
-    // Changement automatique des slides toutes les 5 secondes
+    /**
+     * Changement automatique des slides.
+     * 
+     * Cette fonction permet de changer de slide toutes les 5 secondes.
+     */
     setInterval(() => {
         slideIndex++;
         if (slideIndex >= slides.length) {
@@ -114,8 +154,7 @@ $recentProducts = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
         showSlides(slideIndex);
     }, 5000); // Change toutes les 5 secondes
-</script>
-
+    </script>
 
 </body>
 </html>

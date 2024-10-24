@@ -1,5 +1,27 @@
-<?php include '../includes/header.php'; ?>
+<?php include '../includes/header.php'; 
 
+/**
+ * Fichier contact.php
+ * 
+ * Ce fichier gère l'affichage et le traitement du formulaire de contact.
+ * Il permet aux utilisateurs d'envoyer un message via le formulaire.
+ * Les données du formulaire sont validées, puis envoyées par email à l'administrateur du site.
+ * 
+ * Méthodes incluses :
+ * - Validation des données du formulaire (nom, email, message).
+ * - Envoi de l'email à l'administrateur via la fonction mail().
+ * - Gestion des erreurs en cas de données incorrectes ou d'échec d'envoi.
+ * 
+ * PHP version 7.4+
+ * 
+ * @category   E-commerce
+ * @package    SR NAILS
+ * @author     Nicolas <nicolas.rouillelanoe@gmail.com>
+ * @license    http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @version    1.0
+ * @link       https://github.com/RangaTpst/projet_BTS
+ */
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>

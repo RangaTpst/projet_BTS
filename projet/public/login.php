@@ -1,17 +1,52 @@
 <?php
+/**
+ * Fichier login.php
+ * 
+ * Ce fichier gère la connexion des utilisateurs.
+ * Il vérifie les informations d'identification soumises par l'utilisateur (nom d'utilisateur ou email et mot de passe),
+ * et démarre une session en cas de succès. Il offre également une fonctionnalité "Rester connecté" via des cookies.
+ * Si les informations sont incorrectes, un message d'erreur est renvoyé.
+ * 
+ * Méthodes incluses :
+ * - Validation des champs de formulaire (identifiant, mot de passe).
+ * - Vérification de l'existence de l'utilisateur en base de données.
+ * - Comparaison du mot de passe saisi avec le mot de passe haché stocké en base de données.
+ * - Gestion des sessions utilisateur et des cookies "Rester connecté".
+ * - Redirection en fonction du rôle (admin ou utilisateur normal).
+ * 
+ * PHP version 7.4+
+ * 
+ * @category   Authentication
+ * @package    SR NAILS
+ * @author     Nicolas <nicolas.rouillelanoe@gmail.com>
+ * @license    http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @version    1.0
+ * @link       https://github.com/RangaTpst/projet_BTS
+ */
+
 session_start();
 require_once '../config/db.php'; // Inclure la connexion à la base de données
 
 $error = '';
 
-// Vérifier s'il existe déjà des cookies pour se reconnecter
+/**
+ * Gestion des cookies pour reconnecter l'utilisateur.
+ * 
+ * Si l'utilisateur n'a pas de session active mais a des cookies valides, 
+ * on restaure sa session à partir des informations contenues dans les cookies.
+ */
 if (!isset($_SESSION['user_id']) && isset($_COOKIE['user_id']) && isset($_COOKIE['username']) && isset($_COOKIE['role'])) {
     $_SESSION['user_id'] = $_COOKIE['user_id'];
     $_SESSION['username'] = $_COOKIE['username'];
     $_SESSION['role'] = $_COOKIE['role'];
 }
 
-// Redirection vers la page dashboard si l'utilisateur est déjà connecté
+/**
+ * Redirection si l'utilisateur est déjà connecté.
+ * 
+ * Si l'utilisateur est déjà authentifié via une session active, on le redirige 
+ * vers son tableau de bord en fonction de son rôle (admin ou utilisateur).
+ */
 if (isset($_SESSION['user_id'])) {
     if ($_SESSION['role'] == 'admin') {
         header("Location: ../admin/admin_dashboard.php");
@@ -21,12 +56,23 @@ if (isset($_SESSION['user_id'])) {
     exit();
 }
 
+/**
+ * Traitement du formulaire de connexion.
+ * 
+ * Lorsque le formulaire est soumis, les informations d'identification (nom d'utilisateur/email et mot de passe) 
+ * sont vérifiées dans la base de données.
+ */
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $identifier = $_POST['identifier']; // Peut être soit le nom d'utilisateur, soit l'email
     $password = $_POST['password'];
     $remember_me = isset($_POST['remember_me']); // Vérifier si la case "Rester connecté" est cochée
 
-    // Préparer et exécuter la requête pour vérifier l'utilisateur via le nom d'utilisateur ou l'email
+    /**
+     * Requête SQL pour vérifier l'utilisateur via le nom d'utilisateur ou l'email.
+     * 
+     * @param string $identifier Identifiant utilisateur (nom d'utilisateur ou email).
+     * @param string $password Mot de passe de l'utilisateur.
+     */
     $query = "SELECT * FROM users WHERE username = :identifier1 OR email = :identifier2";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(':identifier1', $identifier, PDO::PARAM_STR);
@@ -35,20 +81,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     $user = $stmt->fetch();
 
+    /**
+     * Vérification du mot de passe avec password_verify().
+     * 
+     * Si l'utilisateur est trouvé et que le mot de passe est correct, on initialise la session utilisateur.
+     */
     if ($user && password_verify($password, $user['password'])) {
-        // L'utilisateur est authentifié, on initialise la session
+        // Initialisation de la session utilisateur
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['username'] = $user['username'];
         $_SESSION['role'] = $user['role'];
 
-        // Si "Rester connecté" est coché, créer des cookies pour 30 jours
+        /**
+         * Gestion de la fonctionnalité "Rester connecté".
+         * 
+         * Si l'utilisateur a coché la case "Rester connecté", des cookies sont créés pour 30 jours.
+         */
         if ($remember_me) {
             setcookie('user_id', $user['id'], time() + (86400 * 30), "/", "", false, true); // 86400 = 1 jour, httponly=true
             setcookie('username', $user['username'], time() + (86400 * 30), "/", "", false, true);
             setcookie('role', $user['role'], time() + (86400 * 30), "/", "", false, true);
         }
 
-        // Rediriger selon le rôle
+        // Redirection en fonction du rôle de l'utilisateur
         if ($user['role'] == 'admin') {
             header("Location: ../admin/admin_dashboard.php");
         } else {

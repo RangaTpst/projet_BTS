@@ -1,18 +1,48 @@
 <?php
-session_start();
-require_once '../config/db.php';
+/**
+ * Fichier admin_dashboard.php
+ * 
+ * Ce fichier permet à l'administrateur de gérer les utilisateurs (promotion/déclassement) et les produits (ajout, modification, suppression).
+ * Il vérifie si l'utilisateur est bien un administrateur avant d'afficher les options de gestion.
+ * 
+ * Méthodes incluses :
+ * - Vérification des droits d'administration.
+ * - Gestion de la promotion et rétrogradation des utilisateurs.
+ * - Gestion de la suppression des produits.
+ * - Récupération des utilisateurs et des produits depuis la base de données.
+ * 
+ * PHP version 7.4+
+ * 
+ * @category   Administration
+ * @package    SR NAILS
+ * @author     Nicolas <nicolas.rouillelanoe@gmail.com>
+ * @license    http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @version    1.0
+ * @link       https://github.com/RagaTpst/projet_BTS
+ */
 
-// Vérifier si l'utilisateur est connecté et est un administrateur
+session_start();
+require_once '../config/db.php'; // Inclusion du fichier de connexion à la base de données
+
+/**
+ * Vérification des droits d'administration.
+ * 
+ * Si l'utilisateur n'est pas connecté ou n'a pas le rôle 'admin', il est redirigé vers la page de connexion.
+ */
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header("Location: login.php");
     exit();
 }
 
-// Supprimer un produit si le paramètre 'delete' est présent dans l'URL
+/**
+ * Suppression d'un produit.
+ * 
+ * Si le paramètre 'delete' est présent dans l'URL, le produit correspondant est supprimé de la base de données.
+ * 
+ * @param int $_GET['delete'] Identifiant du produit à supprimer.
+ */
 if (isset($_GET['delete'])) {
     $product_id = $_GET['delete'];
-
-    // Suppression du produit
     $deleteQuery = "DELETE FROM products WHERE id = :id";
     $stmt = $pdo->prepare($deleteQuery);
     $stmt->bindParam(':id', $product_id, PDO::PARAM_INT);
@@ -25,22 +55,33 @@ if (isset($_GET['delete'])) {
     }
 }
 
-// Récupérer tous les utilisateurs sauf les administrateurs pour promotion
+/**
+ * Récupération des utilisateurs.
+ * 
+ * Requête SQL pour récupérer tous les utilisateurs (non-admin) pour la promotion en administrateurs.
+ * Requête SQL distincte pour récupérer tous les administrateurs pour rétrogradation.
+ * 
+ * @return array Liste des utilisateurs et administrateurs.
+ */
 $query = "SELECT * FROM users WHERE role != 'admin'";
 $stmt = $pdo->query($query);
 $users = $stmt->fetchAll();
 
-// Récupérer tous les administrateurs pour rétrogradation
 $queryAdmins = "SELECT * FROM users WHERE role = 'admin'";
 $stmtAdmins = $pdo->query($queryAdmins);
 $admins = $stmtAdmins->fetchAll();
 
-// Promotion d'un utilisateur en administrateur
+/**
+ * Promotion d'un utilisateur en administrateur.
+ * 
+ * Si le formulaire de promotion est soumis, le rôle de l'utilisateur sélectionné est modifié en 'admin'.
+ * 
+ * @param int $_POST['user_id'] Identifiant de l'utilisateur à promouvoir.
+ */
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['promote_user'])) {
     $userId = $_POST['user_id'];
     $newRole = 'admin';
 
-    // Mise à jour du rôle de l'utilisateur
     $updateQuery = "UPDATE users SET role = :role WHERE id = :id";
     $updateStmt = $pdo->prepare($updateQuery);
     $updateStmt->bindParam(':role', $newRole);
@@ -54,12 +95,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['promote_user'])) {
     }
 }
 
-// Rétrogradation d'un administrateur en utilisateur simple
+/**
+ * Rétrogradation d'un administrateur en utilisateur simple.
+ * 
+ * Si le formulaire de rétrogradation est soumis, le rôle de l'administrateur sélectionné est modifié en 'user'.
+ * 
+ * @param int $_POST['admin_id'] Identifiant de l'administrateur à rétrograder.
+ */
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['demote_user'])) {
     $adminId = $_POST['admin_id'];
     $newRole = 'user';
 
-    // Mise à jour du rôle de l'administrateur
     $updateQuery = "UPDATE users SET role = :role WHERE id = :id";
     $updateStmt = $pdo->prepare($updateQuery);
     $updateStmt->bindParam(':role', $newRole);
@@ -73,7 +119,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['demote_user'])) {
     }
 }
 
-// Récupérer tous les produits disponibles dans la base de données
+/**
+ * Récupération des produits disponibles.
+ * 
+ * Requête SQL pour récupérer tous les produits dans la base de données afin de les afficher dans le tableau de bord.
+ * 
+ * @return array Liste des produits disponibles.
+ */
 $query = "SELECT * FROM products";
 $stmt = $pdo->query($query);
 $products = $stmt->fetchAll();
